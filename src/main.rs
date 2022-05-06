@@ -49,9 +49,7 @@ fn calculate_safety_status(
     has_carrot: bool,
     friends_nearby: i32,
 ) -> bool {
-    if has_carrot { return true; }
-    if friends_nearby > 3 { return true; }
-    return day_time | !wolves_nearby;
+    (day_time && !wolves_nearby) || has_carrot || friends_nearby > 3
 }
 
 /// Validate the simulation
@@ -75,7 +73,7 @@ fn simulate(starting_rabbits: i128) -> i32 {
         rabbits = if rabbits%2 == 0 { rabbits/2 } else { (3*rabbits) + 1 };
         days += 1;
     }
-    return days;
+    days
 }
 
 #[cfg(test)]
